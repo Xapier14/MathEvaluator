@@ -1,0 +1,15 @@
+D:\Repositories\Project Repositories\MathEvaluator\bin\Debug\net6.0\MathEvaluator.exe
+D:\Repositories\Project Repositories\MathEvaluator\bin\Debug\net6.0\MathEvaluator.deps.json
+D:\Repositories\Project Repositories\MathEvaluator\bin\Debug\net6.0\MathEvaluator.runtimeconfig.json
+D:\Repositories\Project Repositories\MathEvaluator\bin\Debug\net6.0\MathEvaluator.dll
+D:\Repositories\Project Repositories\MathEvaluator\bin\Debug\net6.0\MathEvaluator.pdb
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\MathEvaluator.csproj.AssemblyReference.cache
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\MathEvaluator.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\MathEvaluator.AssemblyInfoInputs.cache
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\MathEvaluator.AssemblyInfo.cs
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\MathEvaluator.csproj.CoreCompileInputs.cache
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\MathEvaluator.dll
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\refint\MathEvaluator.dll
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\MathEvaluator.pdb
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\MathEvaluator.genruntimeconfig.cache
+D:\Repositories\Project Repositories\MathEvaluator\obj\Debug\net6.0\ref\MathEvaluator.dll
