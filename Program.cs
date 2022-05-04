@@ -8,12 +8,18 @@ namespace MathEvaluator
     {
         public static void Main(string[] args)
         {
-            // get input
             string? expression = null;
-            while (expression == null)
+            if (args.Length == 0)
             {
-                Console.Write("Input INFIX Math Expression: ");
-                expression = Console.ReadLine();
+                // get input
+                while (expression == null)
+                {
+                    Console.Write("Input INFIX Math Expression: ");
+                    expression = Console.ReadLine();
+                }
+            } else
+            {
+                expression = args[0];
             }
 
             // tokenize string expression
@@ -26,7 +32,7 @@ namespace MathEvaluator
             double result = Algorithm.EvaluatePostFix(postFix);
 
             // Print Result
-            Console.WriteLine($"RESULT: {result}");
+            Console.WriteLine($"{(args.Length != 0 ? "" : "Result: ")}{{0}}", result);
         }
     }
 }
