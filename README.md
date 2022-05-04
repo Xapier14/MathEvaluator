@@ -6,7 +6,7 @@ A simple evaluator for expressions in infix notation.
     List<Token> TokenizeExpression(string expression)
     ```
 
-1. This list of tokens is now assumed to be in infix notation, these will be converted to postfix notation using:
+1. This list of tokens is now assumed to be in infix notation, this will be converted to postfix notation using:
     ```csharp
     List<Token> ShuntingYard(List<Token> infixTokens)
     ```
