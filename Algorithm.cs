@@ -109,55 +109,59 @@ namespace MathEvaluator
         /// <returns>A list of tokens in postfix notation</returns>
         public static List<Token> ShuntingYard(List<Token> infixTokens)
         {
-            List<Token> postfix = new();
+            List<Token> postFix = new();
             Stack<Token> operators = new();
 
-            // for each token in the infix expression
             foreach (Token token in infixTokens)
             {
-                // if this is a number
+                // if token is a number, just add it to output postFix list
                 if (token.Type == TokenType.Number)
                 {
-                    // add to post fix
-                    postfix.Add(token);
+                    postFix.Add(token);
                 } else
                 {
-                    // if open parenthesis
+                    // if open parenthesis, push to stack and continue to next input token
                     if (token.Operator == Operator.OpenParenthesis)
                     {
-                        // push to stack
                         operators.Push(token);
                         continue;
                     }
-                    // if close parenthesis
+                    
+                    // if clost parenthesis, pop from stack until open parenthesis
                     if (token.Operator == Operator.CloseParenthesis)
                     {
-                        // keep popping operator stack to postfix expression until open parenthesis pair is found
                         while (operators.Peek().Operator != Operator.OpenParenthesis)
                         {
-                            postfix.Add(operators.Pop());
+                            postFix.Add(operators.Pop());
                         }
+
                         // discard open parenthesis
                         operators.Pop();
                         continue;
                     }
-                    // if any thing else (other operators)
+
+                    // assume token is some emdas operator
                     while (operators.Count > 0)
                     {
-                        // while operator precedence is lower or the same and is not an open parenthesis, pop operator stack to postfix expression
-                        if (CheckLowerOrSamePrecedence(token, operators.Peek()) && operators.Peek().Operator != Operator.OpenParenthesis)
-                            postfix.Add(operators.Pop());
-                        else
+                        if (CheckLowerOrSamePrecedence(token, operators.Peek()))
+                        {
+                            Token top = operators.Pop();
+                            postFix.Add(top);
+                        } else
+                        {
                             break;
+                        }
                     }
                     operators.Push(token);
                 }
             }
-            // pop the rest of the operator stack to the postfix expression
-            while (operators.Count > 0)
-                postfix.Add(operators.Pop());
 
-            return postfix;
+            while (operators.TryPop(out Token? token))
+            {
+                postFix.Add(token);
+            }
+
+            return postFix;
         }
 
         /// <summary>
@@ -210,6 +214,9 @@ namespace MathEvaluator
         }
         private static bool CheckLowerOrSamePrecedence(Token token1, Token token2)
         {
+            if (token2.Operator == Operator.OpenParenthesis ||
+                token2.Operator == Operator.CloseParenthesis)
+                return false;
             // power operator has the highest precedence
             if (token1.Operator == Operator.Power)
                 return false;
