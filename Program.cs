@@ -8,17 +8,16 @@ namespace MathEvaluator
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Math Expression Evaluator");
-            Console.WriteLine("Use only with expressions in INFIX notation.");
-            Console.WriteLine("Ex: 12 + 3 * ( 4 / 3 + ( 3 ^ 2 ) + 3 ) - 5");
-            Console.WriteLine("Result: 47");
-            Console.WriteLine();
-
             string? expression = null;
             
             // check if expression is not yet supplied
             if (args.Length == 0)
             {
+                Console.WriteLine("Math Expression Evaluator");
+                Console.WriteLine("Use only with expressions in INFIX notation.");
+                Console.WriteLine("Ex: 12 + 3 * ( 4 / 3 + ( 3 ^ 2 ) + 3 ) - 5");
+                Console.WriteLine("Result: 47");
+                Console.WriteLine();
                 // get input
                 while (expression == null)
                 {
