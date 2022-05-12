@@ -15,6 +15,8 @@ namespace MathEvaluator
             Console.WriteLine();
 
             string? expression = null;
+            
+            // check if expression is not yet supplied
             if (args.Length == 0)
             {
                 // get input
@@ -29,13 +31,52 @@ namespace MathEvaluator
             }
 
             // tokenize string expression
-            List<Token> input = Algorithm.TokenizeExpression(expression);
+            List<Token>? input = null;
+            
+            try
+            {
+                input = Algorithm.TokenizeExpression(expression);
+            } catch (Exception)
+            {
+                Console.WriteLine("Tokenization Error. Please double-check your syntax.");
+                Environment.Exit(-1); // EXIT CODE 1 for tokenization error.
+            }
+
+            // verify parameter count
+            if (!Tools.VerifyPararenthesisCount(input))
+            {
+                Console.WriteLine("Input Error. Please double-check your parenthesis pairs.");
+                Environment.Exit(-2); // EXIT CODE 2 for parenthesis count error.
+            }
+
+            // check token length
+            if (input.Count == 0)
+            {
+                Console.WriteLine("Input Error. Please double-check your syntax.");
+                Environment.Exit(-3); // EXIT CODE 3 for empty input error.
+            }
 
             // convert infix expression to postfix
-            List<Token> postFix = Algorithm.ShuntingYard(input);
+            List<Token>? postFix = null;
+            try
+            {
+                postFix = Algorithm.ShuntingYard(input);
+            } catch (Exception)
+            {
+                Console.WriteLine("Postfix Algorithm Error. Please double-check your syntax.");
+                Environment.Exit(-4); // EXIT CODE 4 for tokenization error.
+            }
 
             // evaluate postfix expression
-            double result = Algorithm.EvaluatePostFix(postFix);
+            double result = 0;
+            try
+            {
+                result = Algorithm.EvaluatePostFix(postFix);
+            } catch (Exception)
+            {
+                Console.WriteLine("Evaluation Error. Please double-check your syntax.");
+                Environment.Exit(-5); // EXIT CODE 5 for tokenization error.
+            }
 
             // Print Result
             Console.WriteLine($"{(args.Length != 0 ? "" : "Result: ")}{{0}}", result);

@@ -8,6 +8,23 @@ namespace MathEvaluator
 {
     public static class Tools
     {
+        public static bool VerifyPararenthesisCount(IEnumerable<Token> tokens)
+        {
+            int open = 0, close = 0;
+            tokens.ToList().ForEach(token =>
+            {
+                switch (token.Operator)
+                {
+                    case Operator.OpenParenthesis:
+                        open++;
+                        break;
+                    case Operator.CloseParenthesis:
+                        close++;
+                        break;
+                }
+            });
+            return open == close;
+        }
         public static string Stringify(IEnumerable<Token> tokens)
         {
             StringBuilder sb = new();

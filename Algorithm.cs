@@ -10,22 +10,33 @@ namespace MathEvaluator
     {
         /// <summary>
         /// Tokenizes an expression string
-        /// Time Complexity: O(n)
+        /// Best Case: O(n)
+        /// Average Case: O(n)
+        /// Worst Case: O(n^2)
         /// </summary>
         /// <param name="expression">the expression string</param>
         /// <returns>list of tokens</returns>
         public static List<Token> TokenizeExpression(string expression)
         {
             List<Token> tokens = new();
+            // maximize capacity to prevent resizing
+            tokens.Capacity = 4096;
 
             // number buffer for multi-digit numbers
             string numberBuffer = "";
 
             // for each character
-            foreach (char c in expression.Trim())
+            string trimmed = expression.Trim();
+            for (int i = 0; i < trimmed.Length; ++i)
             {
-                // if the character is a digit
-                if (IsDigit(c))
+                char c = trimmed[i];
+
+                // ignore spaces
+                if (c == ' ')
+                    continue;
+
+                // if the character is a digit or is the start of a negative number
+                if (IsDigit(c) || (c == '-' && numberBuffer.Length == 0 && IsDigit(trimmed, i+1)))
                 {
                     // we append this to the numberBuffer to accomodate multi-digit numbers
                     numberBuffer += c;
@@ -103,7 +114,9 @@ namespace MathEvaluator
         /// <summary>
         /// Dijkstra's Shunting-Yard Algorithm
         /// Converts an infix expression to postfix notation
-        /// Average Time Complexity: O(n)
+        /// Best Case: O(n)
+        /// Average Case: O(n)
+        /// Worst Case: O(n^2)
         /// </summary>
         /// <param name="infixTokens">List of tokens in ifix notation</param>
         /// <returns>A list of tokens in postfix notation</returns>
@@ -112,18 +125,24 @@ namespace MathEvaluator
             List<Token> postFix = new();
             Stack<Token> operators = new();
 
+            // maximize capacity to prevent resizing
+            postFix.Capacity = 4096;
+            // O(n) method.
+            // Doubles current capacity to ensure a capacity of 4096
+            operators.EnsureCapacity(4096);
+
             foreach (Token token in infixTokens)
             {
                 // if token is a number, just add it to output postFix list
                 if (token.Type == TokenType.Number)
                 {
-                    postFix.Add(token);
+                    postFix.Add(token); // AVG: O(1); WORST: O(n)
                 } else
                 {
                     // if open parenthesis, push to stack and continue to next input token
                     if (token.Operator == Operator.OpenParenthesis)
                     {
-                        operators.Push(token);
+                        operators.Push(token); // AVG: O(1); WORST: O(n)
                         continue;
                     }
                     
@@ -166,6 +185,9 @@ namespace MathEvaluator
 
         /// <summary>
         /// Evaluates a list of tokens in postfix notation
+        /// Best Case: O(n)
+        /// Average Case: O(n)
+        /// Worst Case: O(n)
         /// </summary>
         /// <param name="postfixExpression">List of tokens in postfix notation</param>
         /// <returns>The evaluated result</returns>
@@ -211,6 +233,16 @@ namespace MathEvaluator
         private static bool IsDigit(char c)
         {
             return c >= '0' && c <= '9';
+        }
+        private static bool IsDigit(string str, int i)
+        {
+            try
+            {
+                return str[i] >= '0' && str[i] <= '9';
+            } catch (Exception)
+            {
+                return false;
+            }
         }
         private static bool CheckLowerOrSamePrecedence(Token token1, Token token2)
         {
