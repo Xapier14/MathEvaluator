@@ -31,11 +31,9 @@ namespace MathEvaluator
 
             // tokenize string expression
             LinkedList<Token>? input = null;
-            
             try
             {
                 input = Algorithm.TokenizeExpression(expression);
-                Console.WriteLine("INPUT TOKENS:" + Tools.Stringify(input));
             } catch (Exception)
             {
                 Console.WriteLine("Tokenization Error. Please double-check your syntax.");
@@ -61,7 +59,6 @@ namespace MathEvaluator
             try
             {
                 postFix = Algorithm.ShuntingYard(input);
-                Console.WriteLine("POSTFIX TOKENS:" + Tools.Stringify(postFix));
             } catch (Exception)
             {
                 Console.WriteLine("Postfix Algorithm Error. Please double-check your syntax.");
@@ -80,7 +77,7 @@ namespace MathEvaluator
             }
 
             // Print Result
-            Console.WriteLine($"{(args.Length != 0 ? "" : "Result: ")}{{0}}", result);
+            Console.WriteLine($"{(args.Length != 0 ?"" : "Result: ")}{{0}}", result);
         }
     }
 }
