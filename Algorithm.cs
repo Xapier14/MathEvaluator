@@ -238,7 +238,7 @@ namespace MathEvaluator
         {
             try
             {
-                return str[i] >= '0' && str[i] <= '9';
+                return IsDigit(str[i]);
             } catch (Exception)
             {
                 return false;
