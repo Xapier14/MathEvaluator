@@ -63,7 +63,7 @@ A simple evaluator for expressions in infix notation.
     **NOTE:** You can also run the executable in the `./bin/` directory.
 
 ## Requirements
-* .NET 5+
+* .NET 6+
 
 ## License
 ### The MIT License
