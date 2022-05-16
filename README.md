@@ -1,7 +1,7 @@
 ﻿# MathEvaluator
 A simple evaluator for expressions in infix notation.
 ## How it works
-1. Expressions stored as strings are tokenized into a `List<Token>` via:
+1. Expressions stored as strings are tokenized into a `LinkedList<Token>` via:
     ```csharp
     LinkedList<Token> TokenizeExpression(string expression)
     ```
