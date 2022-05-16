@@ -12,15 +12,13 @@ namespace MathEvaluator
         /// Tokenizes an expression string
         /// Best Case: O(n)
         /// Average Case: O(n)
-        /// Worst Case: O(n^2)
+        /// Worst Case: O(n)
         /// </summary>
         /// <param name="expression">the expression string</param>
         /// <returns>list of tokens</returns>
-        public static List<Token> TokenizeExpression(string expression)
+        public static LinkedList<Token> TokenizeExpression(string expression)
         {
-            List<Token> tokens = new();
-            // maximize capacity to prevent resizing
-            tokens.Capacity = 4096;
+            LinkedList<Token> tokens = new();
 
             // number buffer for multi-digit numbers
             string numberBuffer = "";
@@ -54,7 +52,7 @@ namespace MathEvaluator
                         };
                         numberBuffer = "";
                         // and add it to the return list
-                        tokens.Add(numberToken);
+                        tokens.AddLast(numberToken);
                     }
 
                     // we prepare a new operator token just in case:
@@ -92,7 +90,7 @@ namespace MathEvaluator
                     }
 
                     // if the operator was valid, we add the newly made token to the return list
-                    tokens.Add(operatorToken);
+                    tokens.AddLast(operatorToken);
                 }
             }
 
@@ -105,7 +103,7 @@ namespace MathEvaluator
                     Type = TokenType.Number,
                     Data = double.Parse(numberBuffer)
                 };
-                tokens.Add(numberToken);
+                tokens.AddLast(numberToken);
             }
 
             return tokens;
@@ -120,14 +118,11 @@ namespace MathEvaluator
         /// </summary>
         /// <param name="infixTokens">List of tokens in ifix notation</param>
         /// <returns>A list of tokens in postfix notation</returns>
-        public static List<Token> ShuntingYard(List<Token> infixTokens)
+        public static LinkedList<Token> ShuntingYard(LinkedList<Token> infixTokens)
         {
-            List<Token> postFix = new();
+            LinkedList<Token> postFix = new();
             Stack<Token> operators = new();
 
-            // maximize capacity to prevent resizing
-            postFix.Capacity = 4096;
-            // O(n) method.
             // Doubles current capacity to ensure a capacity of 4096
             operators.EnsureCapacity(4096);
 
@@ -136,13 +131,13 @@ namespace MathEvaluator
                 // if token is a number, just add it to output postFix list
                 if (token.Type == TokenType.Number)
                 {
-                    postFix.Add(token); // AVG: O(1); WORST: O(n)
+                    postFix.AddLast(token);
                 } else
                 {
                     // if open parenthesis, push to stack and continue to next input token
                     if (token.Operator == Operator.OpenParenthesis)
                     {
-                        operators.Push(token); // AVG: O(1); WORST: O(n)
+                        operators.Push(token);
                         continue;
                     }
                     
@@ -151,7 +146,7 @@ namespace MathEvaluator
                     {
                         while (operators.Peek().Operator != Operator.OpenParenthesis)
                         {
-                            postFix.Add(operators.Pop());
+                            postFix.AddLast(operators.Pop());
                         }
 
                         // discard open parenthesis
@@ -165,7 +160,7 @@ namespace MathEvaluator
                         if (CheckLowerOrSamePrecedence(token, operators.Peek()))
                         {
                             Token top = operators.Pop();
-                            postFix.Add(top);
+                            postFix.AddLast(top);
                         } else
                         {
                             break;
@@ -177,7 +172,7 @@ namespace MathEvaluator
 
             while (operators.TryPop(out Token? token))
             {
-                postFix.Add(token);
+                postFix.AddLast(token);
             }
 
             return postFix;
@@ -191,7 +186,7 @@ namespace MathEvaluator
         /// </summary>
         /// <param name="postfixExpression">List of tokens in postfix notation</param>
         /// <returns>The evaluated result</returns>
-        public static double EvaluatePostFix(List<Token> postfixExpression)
+        public static double EvaluatePostFix(LinkedList<Token> postfixExpression)
         {
             Stack<Token> buffer = new();
             foreach (Token token in postfixExpression)

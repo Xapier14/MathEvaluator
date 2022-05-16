@@ -30,7 +30,7 @@ namespace MathEvaluator
             }
 
             // tokenize string expression
-            List<Token>? input = null;
+            LinkedList<Token>? input = null;
             
             try
             {
@@ -56,7 +56,7 @@ namespace MathEvaluator
             }
 
             // convert infix expression to postfix
-            List<Token>? postFix = null;
+            LinkedList<Token>? postFix = null;
             try
             {
                 postFix = Algorithm.ShuntingYard(input);

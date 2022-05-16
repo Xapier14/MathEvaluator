@@ -3,18 +3,18 @@ A simple evaluator for expressions in infix notation.
 ## How it works
 1. Expressions stored as strings are tokenized into a `List<Token>` via:
     ```csharp
-    List<Token> TokenizeExpression(string expression)
+    LinkedList<Token> TokenizeExpression(string expression)
     ```
 
 1. This list of tokens is now assumed to be in infix notation, this will be converted to postfix notation using:
     ```csharp
-    List<Token> ShuntingYard(List<Token> infixTokens)
+    LinkedList<Token> ShuntingYard(LinkedList<Token> infixTokens)
     ```
     *This function is an implementation of Dijkstra's Shunting-Yard Algorithm.*
 
 1. Lastly, the list of tokens in postfix notation is evaluated by:
     ```csharp
-    double EvaluatePostFix(List<Token> postfixExpression)
+    double EvaluatePostFix(LinkedList<Token> postfixExpression)
     ```
 
 ## Getting Started
