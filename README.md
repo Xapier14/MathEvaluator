@@ -17,6 +17,32 @@ A simple evaluator for expressions in infix notation.
     double EvaluatePostFix(LinkedList<Token> postfixExpression)
     ```
 
+## Example Process
+1. Input string: `12+3*(4/3+(3^2)+3)-5`
+1. Tokenize: `12 + 3 * ( 4 / 3 + ( 3 ^ 2 ) + 3 ) - 5`
+1. Shunting-Yard: `12 3 4 3 / 3 2 ^ + 3 + * + 5 -`
+    ```md
+    1. 12 3 4 3 / 3 2 ^ + 3 + * + 5 - 
+                ^
+    2. 12 3 1.333~ 3 2 ^ + 3 + * + 5 -
+                       ^
+    3. 12 3 1.333~ 9 + 3 + * + 5 -
+                     ^
+    4. 12 3 10.333~ + 3 * + 5 -
+                    ^
+    5. 12 3 13.333~ * + 5 -
+                    ^
+    6. 12 3 13.333~ * + 5 -
+                    ^
+    7. 12 40 + 5 -
+             ^
+    8. 52 5 -
+            ^
+    9. 47
+    > DONE
+    ```
+1. Result: `47`
+
 ## Getting Started
 1. Clone the repository.
     ```shell
