@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,3 +22,49 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+  publish-linux-64:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Publish
+      run: dotnet publish --self-contained --configuration Release --os linux --arch 64x --output "${ARTIFACTS_DIR}"
+    - name: Publish to GitHub
+      uses: actions/github-artifact@v2
+      with:
+        name: dotnet-release
+        path: "${ARTIFACTS_DIR}"
+        source: "${ARTIFACTS_DIR}"
+        target_directory: dotnet-release
+        target_path: dotnet-release
+        run_if_changed: dotnet-release
+
+  publish-windows-64:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Publish
+      run: dotnet publish --self-contained --configuration Release --os win --arch x64 --output "${ARTIFACTS_DIR}"
+    - name: Publish to GitHub
+      uses: actions/github-artifact@v2
+      with:
+        name: dotnet-release
+        path: "${ARTIFACTS_DIR}"
+        source: "${ARTIFACTS_DIR}"
+        target_directory: dotnet-release
+        target_path: dotnet-release
+        run_if_changed: dotnet-release
