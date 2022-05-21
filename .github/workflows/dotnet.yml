@@ -34,13 +34,20 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Publish
-      run: dotnet publish --self-contained --configuration Release --os linux --arch x64 --output "artifacts/linux-x64"
+    - name: Publish Self Contained
+      run: dotnet publish --self-contained --configuration Release --os linux --arch x64 --output "artifacts/linux-x64/self-contained"
     - name: Publish to GitHub
       uses: actions/upload-artifact@v3
       with:
         name: linux-x64
-        path: artifacts/linux-x64/
+        path: artifacts/linux-x64/self-contained/
+    - name: Publish NET Runtime dependent
+      run: dotnet publish --configuration Release --os linux --arch x64 --output "artifacts/linux-x64/net"
+    - name: Publish to GitHub NET Runtime dependent
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux-x64
+        path: artifacts/linux-x64/net/
 
   publish-windows-64:
     runs-on: windows-latest
@@ -53,10 +60,17 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Publish
-      run: dotnet publish --self-contained --configuration Release --os win --arch x64 --output "artifacts/win-x64"
-    - name: Publish to GitHub
+    - name: Publish Self Contained
+      run: dotnet publish --self-contained --configuration Release --os win --arch x64 --output "artifacts/win-x64/self-contained"
+    - name: Publish to GitHub Self Contained
       uses: actions/upload-artifact@v3
       with:
         name: windows-x64
-        path: artifacts/win-x64/
+        path: artifacts/win-x64/self-contained/
+    - name: Publish
+      run: dotnet publish --self-contained --configuration Release --os win --arch x64 --output "artifacts/win-x64/net"
+    - name: Publish to GitHub NET Runtime dependent
+      uses: actions/upload-artifact@v3
+      with:
+        name: windows-x64
+        path: artifacts/win-x64/net/
