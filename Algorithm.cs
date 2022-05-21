@@ -32,9 +32,8 @@ namespace MathEvaluator
                 // ignore spaces
                 if (c == ' ')
                     continue;
-
                 // if the character is a digit or is the start of a negative number
-                if (IsDigit(c) || (c == '-' && numberBuffer.Length == 0 && IsDigit(trimmed, i+1)))
+                if (IsDigit(c) || (c == '-' && numberBuffer.Length == 0 && IsDigit(trimmed, i+1) && (tokens.Count() == 0 || IsPEMDAS(tokens.LastOrDefault((Token?)null)))))
                 {
                     // we append this to the numberBuffer to accomodate multi-digit numbers
                     numberBuffer += c;
@@ -52,6 +51,7 @@ namespace MathEvaluator
                         };
                         numberBuffer = "";
                         // and add it to the return list
+                        Console.WriteLine(numberToken);
                         tokens.AddLast(numberToken);
                     }
 
@@ -90,6 +90,7 @@ namespace MathEvaluator
                     }
 
                     // if the operator was valid, we add the newly made token to the return list
+                    Console.WriteLine(operatorToken);
                     tokens.AddLast(operatorToken);
                 }
             }
@@ -103,6 +104,7 @@ namespace MathEvaluator
                     Type = TokenType.Number,
                     Data = double.Parse(numberBuffer)
                 };
+                Console.WriteLine(numberToken);
                 tokens.AddLast(numberToken);
             }
 
@@ -225,6 +227,16 @@ namespace MathEvaluator
 
 
         #region AUXILLIARY FUNCTIONS
+        private static bool IsPEMDAS(Token? token)
+        {
+            if (token is null)
+                return false;
+            return token.Operator == Operator.Addition ||
+                   token.Operator == Operator.Subtraction ||
+                   token.Operator == Operator.Multiplication ||
+                   token.Operator == Operator.Division ||
+                   token.Operator == Operator.Power;
+        }
         private static bool IsDigit(char c)
         {
             return c >= '0' && c <= '9';
