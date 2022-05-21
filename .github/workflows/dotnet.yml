@@ -35,7 +35,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish --self-contained --configuration Release --os linux --arch 64x --output "${ARTIFACTS_DIR}/linux-x64"
+      run: dotnet publish --self-contained --configuration Release --os linux --arch x64 --output "${ARTIFACTS_DIR}/linux-x64"
     - name: Publish to GitHub
       uses: actions/upload-artifact@v3
       with:
