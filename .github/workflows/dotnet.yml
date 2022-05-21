@@ -35,16 +35,12 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish --self-contained --configuration Release --os linux --arch 64x --output "${ARTIFACTS_DIR}"
+      run: dotnet publish --self-contained --configuration Release --os linux --arch 64x --output "${ARTIFACTS_DIR}/linux-x64"
     - name: Publish to GitHub
-      uses: actions/github-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
-        name: dotnet-release
-        path: "${ARTIFACTS_DIR}"
-        source: "${ARTIFACTS_DIR}"
-        target_directory: dotnet-release
-        target_path: dotnet-release
-        run_if_changed: dotnet-release
+        name: linux-x64
+        path: ${ARTIFACTS_DIR}/linux-x64
 
   publish-windows-64:
     runs-on: windows-latest
@@ -58,13 +54,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish --self-contained --configuration Release --os win --arch x64 --output "${ARTIFACTS_DIR}"
+      run: dotnet publish --self-contained --configuration Release --os win --arch x64 --output "${ARTIFACTS_DIR}/win-x64"
     - name: Publish to GitHub
-      uses: actions/github-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
-        name: dotnet-release
-        path: "${ARTIFACTS_DIR}"
-        source: "${ARTIFACTS_DIR}"
-        target_directory: dotnet-release
-        target_path: dotnet-release
-        run_if_changed: dotnet-release
+        name: windows-x64
+        path: ${ARTIFACTS_DIR}/win-x64
