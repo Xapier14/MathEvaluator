@@ -68,7 +68,7 @@ jobs:
         name: windows-x64
         path: artifacts/win-x64/self-contained/
     - name: Publish
-      run: dotnet publish --self-contained --configuration Release --os win --arch x64 --output "artifacts/win-x64/net"
+      run: dotnet publish --configuration Release --os win --arch x64 --output "artifacts/win-x64/net"
     - name: Publish to GitHub NET Runtime dependent
       uses: actions/upload-artifact@v3
       with:
