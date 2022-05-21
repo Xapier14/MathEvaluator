@@ -36,7 +36,7 @@ jobs:
       run: dotnet restore
     - name: Publish Self Contained
       run: dotnet publish --self-contained --configuration Release --os linux --arch x64 --output "artifacts/linux-x64/self-contained"
-    - name: Publish to GitHub
+    - name: Publish to GitHub Self Contained
       uses: actions/upload-artifact@v3
       with:
         name: linux-x64
