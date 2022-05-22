@@ -51,7 +51,6 @@ namespace MathEvaluator
                         };
                         numberBuffer = "";
                         // and add it to the return list
-                        Console.WriteLine(numberToken);
                         tokens.AddLast(numberToken);
                     }
 
@@ -90,7 +89,6 @@ namespace MathEvaluator
                     }
 
                     // if the operator was valid, we add the newly made token to the return list
-                    Console.WriteLine(operatorToken);
                     tokens.AddLast(operatorToken);
                 }
             }
@@ -104,7 +102,6 @@ namespace MathEvaluator
                     Type = TokenType.Number,
                     Data = double.Parse(numberBuffer)
                 };
-                Console.WriteLine(numberToken);
                 tokens.AddLast(numberToken);
             }
 
