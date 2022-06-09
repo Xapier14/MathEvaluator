@@ -32,8 +32,10 @@ namespace MathEvaluator
                 // ignore spaces
                 if (c == ' ')
                     continue;
-                // if the character is a digit or is the start of a negative number
-                if (IsDigit(c) || (c == '-' && numberBuffer.Length == 0 && IsDigit(trimmed, i+1) && (tokens.Count() == 0 || IsPEMDAS(tokens.LastOrDefault((Token?)null)))))
+                // if the character is a digit or is the start of a negative number or a period of a floating point number
+                if (IsDigit(c) ||
+                    (c == '-' && numberBuffer.Length == 0 && IsDigit(trimmed, i+1) && (tokens.Count() == 0 || IsPEMDAS(tokens.LastOrDefault((Token?)null)))) ||
+                    (c == '.' && numberBuffer.Replace("-", "").Length > 0 && !numberBuffer.Contains('.')))
                 {
                     // we append this to the numberBuffer to accomodate multi-digit numbers
                     numberBuffer += c;
@@ -140,7 +142,7 @@ namespace MathEvaluator
                         continue;
                     }
                     
-                    // if clost parenthesis, pop from stack until open parenthesis
+                    // if close parenthesis, pop from stack until open parenthesis
                     if (token.Operator == Operator.CloseParenthesis)
                     {
                         while (operators.Peek().Operator != Operator.OpenParenthesis)
